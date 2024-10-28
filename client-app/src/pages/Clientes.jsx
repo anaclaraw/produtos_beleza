@@ -2,27 +2,19 @@ import { useState, useEffect } from 'react'
 import axios from 'axios';
 import styled from 'styled-components';
 import '../App.css'
-import ProductListAll from '../components/ProductListAll';
-import Navbar from '../components/Navbar';
-import Capa from '../components/Capa';
 import ImageBrush from '/brush.png'
 
-function Home() {
+function Clientes() {
  
 
   return (
     <Container>
-      <Navbar/>
-      <Capa/>
-      <h1>Os queridinhos</h1>
-      <h2>A cada escolha, novos produtos para experimentar</h2>
-      <ProductListAll />
-      <p>...Footer...</p>
+        <h1>Clientes</h1>
     </Container>
   )
 }
 
-export default Home
+export default Clientes
 
 
 const Container = styled.main`

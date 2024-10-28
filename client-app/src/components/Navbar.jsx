@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IoIosCart } from "react-icons/io";
 
 const Nav = styled.nav`
   display: flex;
@@ -9,6 +10,11 @@ const Nav = styled.nav`
   position: fixed;
   width: 100%;
   z-index: 5;
+
+  svg{
+    color: white;
+    font-size: x-large;
+  }
 `;
 
 const Logo = styled.div`
@@ -50,7 +56,7 @@ function Navbar() {
         <A>Resources</A>
         <A>About us</A>
       </Links>
-
+      <IoIosCart />
     </Nav>
   );
 }

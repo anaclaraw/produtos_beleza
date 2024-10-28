@@ -3,24 +3,25 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { IoSearch } from "react-icons/io5";
 
+
 const ProductListAll = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [orderBy, setOrderBy] = useState('aluno_id');
+  const [orderBy, setOrderBy] = useState('preco');
   const [direction, setDirection] = useState('ASC');
-  const [cursos, setCursos] = useState([]);
-  const categories = ['Todos', 'Eng', 'Jor', 'Ciê'];
+  const [marca, setMarca] = useState([]);
+  const categories = ['Todos', 'Perfumes', 'Maquiagem', 'Cuidados com a pele','Higiene Pessoal','Cabelos'];
 
 
   useEffect(() => {
     fetchProducts(searchTerm ? `/busca/${searchTerm}` : '/');
-    fetchAllCursos()
+    fetchAllMarcas()
   }, [searchTerm]);
 
   const fetchProducts = async (endpoint) => {
     setIsLoading(true);
-    const url = `http://localhost:9000/alunos${endpoint}`;
+    const url = `http://localhost:9005/produtos${endpoint}`;
     try {
       const response = await axios.get(url, { params: { orderBy, direction } });
       setProducts(response.data);
@@ -40,9 +41,9 @@ const ProductListAll = () => {
 
   const handleOrderByChange = (event) => {
     const orderMapping = {
-      primeiro_aluno: { orderBy: 'aluno_id', direction: 'ASC' },
-      maior_idade: { orderBy: 'idade', direction: 'DESC' },
-      menor_idade: { orderBy: 'idade', direction: 'ASC' },
+      maior_preco: { orderBy: 'preco', direction: 'DESC' },
+      menor_preco: { orderBy: 'preco', direction: 'ASC' },
+      mais_recente: { orderBy: 'produto_id', direction: 'DESC' },
     };
 
     const selectedOrder = orderMapping[event.target.value];
@@ -53,24 +54,22 @@ const ProductListAll = () => {
     }
   };
 
-  const handleSelectCurso = (event) => {
-    const endpoint = `/curso/${event.target.value}`
-    console.log('enet::'+ (event.target.value));
-    
+  const handleSelectByMarca = (event) => {
+    const endpoint = event.target.value > 1 ?  `/marca/${event.target.value}` : '/' ; 
     fetchProducts(endpoint);
   };
 
-  const fetchAllCursos = async () => {
+  const fetchAllMarcas = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/cursos');
-      setCursos(response.data);
+      const response = await axios.get('http://localhost:9005/marcas');
+      setMarca(response.data);
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
     } finally {
       // setIsLoading(false);
     }
   };
-  // fetchAllCursos()
+  // fetchAllMarcas()
 
   return (
     <Container>
@@ -87,14 +86,14 @@ const ProductListAll = () => {
         </SearchInput>
         <select onChange={handleOrderByChange}>
           <option value="">Ordenar por:</option>
-          <option value="primeiro_aluno">Maior preço</option>
-          <option value="maior_idade">Menor preço</option>
-          <option value="menor_idade">Melhor avaliação</option>
+          <option value="maior_preco">Maior preço</option>
+          <option value="menor_preco">Menor preço</option>
+          <option value="mais_recente">Mais recente</option>
         </select>
-        <select onChange={handleSelectCurso}>
-          <option value="">Curso</option>
-          {cursos.map((curso) => (
-            <option key={curso.curso_id} value={curso.nome_curso}>{curso.nome_curso}</option>
+        <select onChange={handleSelectByMarca}>
+          <option value="">Marca</option>
+          {marca.map((marca) => (
+            <option key={marca.marca_id} value={marca.marca_id}>{marca.nome_marca}</option>
 
           ))}
         </select>
@@ -110,7 +109,7 @@ const ProductListAll = () => {
       </CategoryButtons>
       <ProductGrid>
         {products.map((product) => (
-          <ProductCard key={product.aluno_id} product={product} />
+          <ProductCard key={product.produto_id} product={product} />
         ))}
         {isLoading && <div>Carregando dados...</div>}
       </ProductGrid>
@@ -122,8 +121,8 @@ const ProductCard = ({ product }) => (
   <Card>
     <CardInfo>
       <h3>{product.nome}</h3>
-      <p>{product.idade} anos</p>
-      <p>{product.curso}</p>
+      <p>{product.descricao} </p>
+      <p>{product.preco}</p>
       <button>Comprar</button>
     </CardInfo>
   </Card>
@@ -153,7 +152,7 @@ const SearchBar = styled.div`
 const CategoryButtons = styled.div`
   display: flex;
   justify-content: space-evenly;
-  width: 80%;
+  width: 100%;
   margin: 1% auto;
 
   button {
