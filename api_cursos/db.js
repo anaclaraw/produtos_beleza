@@ -23,7 +23,9 @@ async function connect() {
     const {orderBy,direction} = OrderBy
     const client = await connect();
     try {
-      const res = await client.query(`SELECT * FROM produtos ORDER BY ${orderBy} ${direction}`);
+      const res = await client.query(`SELECT * FROM vw_produtos_and_marcas ORDER BY ${orderBy} ${direction}`);
+      console.log(`SELECT * FROM vw_produtos_and_marcas ORDER BY ${orderBy} ${direction}`);
+      
       return res.rows;
     } finally {
       client.release(); // Libera a conexão após o uso

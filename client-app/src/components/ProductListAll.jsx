@@ -19,12 +19,19 @@ const ProductListAll = () => {
     fetchAllMarcas()
   }, [searchTerm]);
 
+  useEffect(() => {
+    fetchProducts(searchTerm ? `/busca/${searchTerm}` : '/');
+  }, [orderBy, direction]);
+
   const fetchProducts = async (endpoint) => {
     setIsLoading(true);
     const url = `http://localhost:9005/produtos${endpoint}`;
     try {
       const response = await axios.get(url, { params: { orderBy, direction } });
+     
       setProducts(response.data);
+      console.log(response.data);
+      
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
     } finally {
@@ -43,15 +50,18 @@ const ProductListAll = () => {
     const orderMapping = {
       maior_preco: { orderBy: 'preco', direction: 'DESC' },
       menor_preco: { orderBy: 'preco', direction: 'ASC' },
-      mais_recente: { orderBy: 'produto_id', direction: 'DESC' },
+      mais_relevante: { orderBy: 'nota_avaliacao', direction: 'DESC NULLS LAST' },
+      mais_recente: { orderBy: 'produto_id', direction: 'ASC' },
     };
 
     const selectedOrder = orderMapping[event.target.value];
     if (selectedOrder) {
       setOrderBy(selectedOrder.orderBy);
       setDirection(selectedOrder.direction);
-      fetchProducts('');
+    
+      
     }
+    
   };
 
   const handleSelectByMarca = (event) => {
@@ -88,6 +98,7 @@ const ProductListAll = () => {
           <option value="">Ordenar por:</option>
           <option value="maior_preco">Maior preço</option>
           <option value="menor_preco">Menor preço</option>
+          <option value="mais_relevante">Mais relevante</option>
           <option value="mais_recente">Mais recente</option>
         </select>
         <select onChange={handleSelectByMarca}>
@@ -163,24 +174,27 @@ const CategoryButtons = styled.div`
 
 const SearchInput = styled.div`
   position: relative;
-  background-color: #ceb0b1;
+  background-color: #f8ccce;
   border-radius: 50px;
   width: 60%;
+  padding: 10px;
 
   .search-icon {
     position: absolute;
-    right: 16px;
-    top: 16px;
+    right: 36px;
+    top: 29px;
     color: #f3a2a2;
   }
 
   input {
-    width: 100%;
-    padding: 12px 16px;
+    width: 95%;
+    padding: 12px 0px 12px 15px;
     border: none;
     font-size: 18px;
     border-radius: 50px;
     outline: none;
+    border: 5px solid #ebb0c8;
+    filter: drop-shadow(0px 2px 2px #4240403c);
   }
 `;
 
