@@ -19,7 +19,8 @@ async function connect() {
   
   connect();
 
-  async function selectProdutos(OrderBy) {
+  //Selcionando TODOS
+  async function selectAllProdutos(OrderBy) {
     const {orderBy,direction} = OrderBy
     const client = await connect();
     try {
@@ -32,10 +33,41 @@ async function connect() {
     }
   }
 
+  async function selectAllMarcas() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from marcas`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectAllCategorias() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from categorias`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  //Selecionando PRODUTOS com filtros
   async function selectProdutosById(id) {
     const client = await connect();
     try {
       const res = await client.query("select * from produtos where produto_id=$1", [id]); //prepating query -> faz uma limpeza para evitar sql inject
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectByCategoria(categoria) {
+    const client = await connect();
+    try {
+      const res = await client.query(`SELECT * FROM vw_produtos_and_marcas WHERE nome_categoria = '${categoria}'`);
       return res.rows;
     } finally {
       client.release(); // Libera a conexão após o uso
@@ -55,36 +87,6 @@ async function connect() {
     }
   }
 
-  async function selectAllCategorias() {
-    const client = await connect();
-    try {
-      const res = await client.query(`select * from categorias`);
-      return res.rows;
-    } finally {
-      client.release(); // Libera a conexão após o uso
-    }
-  }
-
-  async function selectByCategoria(categoria) {
-    const client = await connect();
-    try {
-      const res = await client.query(`SELECT * FROM vw_produtos_and_marcas WHERE nome_categoria = '${categoria}'`);
-      return res.rows;
-    } finally {
-      client.release(); // Libera a conexão após o uso
-    }
-  }
-
-  async function selectAllMarcas() {
-    const client = await connect();
-    try {
-      const res = await client.query(`select * from marcas`);
-      return res.rows;
-    } finally {
-      client.release(); // Libera a conexão após o uso
-    }
-  }
-
   async function selectProdutoByMarca(marca_id) {
     const client = await connect();
     try {
@@ -94,7 +96,8 @@ async function connect() {
       client.release(); // Libera a conexão após o uso
     }
   }
-
+     
+  //Selecionando CLIENTES
   async function selectClienteByCidade(cidade) {
     const client = await connect();
     try {
@@ -107,7 +110,7 @@ async function connect() {
 
 
   module.exports = {
-    selectProdutos,
+    selectAllProdutos,
     selectProdutosById,
     selectProdutosByNomeOrCategoria,
     selectAllCategorias,

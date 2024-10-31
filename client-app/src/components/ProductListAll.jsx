@@ -131,6 +131,7 @@ const ProductListAll = () => {
 const ProductCard = ({ product }) => (
   <Card>
     <CardInfo>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdwXtAOL0wCTsYOlr33hJX33swJ5ItWUmeRA&s" alt="" />
       <h3>{product.nome}</h3>
       <p>{product.descricao} </p>
       <p>{product.preco}</p>
@@ -204,15 +205,15 @@ const ProductGrid = styled.div`
   margin: 0 auto;
   padding: 20px;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
+  
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-
+  
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
   }
-`;
+  `;
 
 const Card = styled.div`
   display: flex;
@@ -220,6 +221,7 @@ const Card = styled.div`
   background-color: #fff;
   padding: 15px;
   transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 0 0.25px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: scale(1.02);
@@ -227,18 +229,33 @@ const Card = styled.div`
 `;
 
 const CardInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%; /* Garante que o conteúdo interno também preencha o espaço */
   h3 {
     font-size: 18px;
+    margin: 0;
   }
 
   p {
+    margin: 0;
+
     font-size: 14px;
     color: #888;
+    display: -webkit-box;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+    
   }
   button{
+    margin-top: auto;
     background-color: #f89fa1;
     border-radius: 100px;
     padding: 10px;
+    width: 60%;
+    
   }
 `;
 

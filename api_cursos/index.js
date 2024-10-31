@@ -12,12 +12,11 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req,res)=>{
-    res.json({message:"Funcionando!"})
-    
+    res.json({message:"Funcionando!"}) 
 })
 
 app.get('/produtos/', async (req,res)=>{ 
-    const produtos = await db.selectProdutos(req.query)
+    const produtos = await db.selectAllProdutos(req.query)
     res.json(produtos)
 })
 
