@@ -45,6 +45,11 @@ const PromocaoTitulo = styled.span`
   color: #333;
 `;
 
+const PromocaoProduto = styled.span`
+  font-size: 0.9em;
+  
+`;
+
 const PromocaoDesconto = styled.span`
   font-size: 0.9em;
   color: #575cbb;
@@ -58,7 +63,7 @@ const Promocoes = ({ data }) => (
         <ListItem key={promocao.promocao_id}>
           <PromocaoInfo>
             <PromocaoTitulo>Desconto: {promocao.promocao_desconto}% off</PromocaoTitulo>
-            <p>Produto: {promocao.produto_id}</p>
+            <PromocaoProduto>Produto: {promocao.produto_id}</PromocaoProduto>
             <PromocaoDesconto>Status: {promocao.status_desconto}</PromocaoDesconto>
           </PromocaoInfo>
         </ListItem>

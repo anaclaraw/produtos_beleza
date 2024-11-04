@@ -45,10 +45,11 @@ const SubCategoriaName = styled.span`
   color: #333;
 `;
 
-const SubCategoriaEmail = styled.span`
+const SubCategoriaId = styled.span`
   font-size: 0.9em;
   color: #666;
 `;
+
 
 const SubCategorias = ({ data }) => (
   <Container>
@@ -58,6 +59,7 @@ const SubCategorias = ({ data }) => (
         <ListItem key={SubCategoria.subcategoria_id}>
           <SubCategoriaInfo>
             <SubCategoriaName>{SubCategoria.nome_subcategoria}</SubCategoriaName>
+            <SubCategoriaId>ID: {SubCategoria.subcategoria_id}</SubCategoriaId>
           </SubCategoriaInfo>
         </ListItem>
       ))}

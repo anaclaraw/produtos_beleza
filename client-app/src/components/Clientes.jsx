@@ -58,7 +58,11 @@ const Clientes = ({ data }) => (
         <ListItem key={cliente.cliente_id}>
           <ClienteInfo>
             <ClienteName>{cliente.nome_cliente}</ClienteName>
-            <ClienteEmail>Email: {cliente.email}</ClienteEmail>
+            <ClienteEmail> {cliente.email} - {cliente.telefone}</ClienteEmail>
+            <ClienteEmail> </ClienteEmail>
+            <ClienteEmail>CPF: {cliente.cpf} - Gênero: {cliente.genero}</ClienteEmail>
+            <ClienteEmail>Endereço: {cliente.logradouro} {cliente.numero}, {cliente.cidade} - {cliente.estado}</ClienteEmail>
+            <ClienteEmail>Data de nascimento: {cliente.data_nascimento}</ClienteEmail>
           </ClienteInfo>
         </ListItem>
       ))}

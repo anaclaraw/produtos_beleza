@@ -36,7 +36,7 @@ const ListItem = styled.li`
 
 const CategoriaInfo = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   align-items: flex-start;
 `;
 
@@ -45,7 +45,7 @@ const CategoriaName = styled.span`
   color: #333;
 `;
 
-const CategoriaEmail = styled.span`
+const CategoriaId = styled.span`
   font-size: 0.9em;
   color: #666;
 `;
@@ -58,6 +58,7 @@ const Categorias = ({ data }) => (
         <ListItem key={Categoria.categoria_id}>
           <CategoriaInfo>
             <CategoriaName>{Categoria.nome_categoria}</CategoriaName>
+            <CategoriaId>ID: {Categoria.categoria_id}</CategoriaId>
           </CategoriaInfo>
         </ListItem>
       ))}

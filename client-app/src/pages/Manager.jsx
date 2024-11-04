@@ -84,8 +84,8 @@ const Container = styled.main`
   font-family: "Poppins", serif;
   display: flex;
   flex-direction: column;
-  max-width: 75%;
-  margin-left: 25vw;
+  max-width: 80%;
+  margin-left: 20vw;
   color: gray;
   display: flex;
   flex-flow: column wrap;
@@ -96,7 +96,7 @@ const Container = styled.main`
 
 const MenuLateral = styled.main`
   height: 100vh;
-  width: 25vw;
+  width: 20vw;
   position: fixed;
   background-color: #94654c ;
   font-family: "Poppins", serif;

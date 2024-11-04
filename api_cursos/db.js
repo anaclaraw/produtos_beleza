@@ -57,7 +57,7 @@ async function connect() {
   async function selectAllClientes() {
     const client = await connect();
     try {
-      const res = await client.query(`select * from clientes`);
+      const res = await client.query(`SELECT * FROM cidade_cliente`);
       return res.rows;
     } finally {
       client.release(); // Libera a conexão após o uso
@@ -67,7 +67,7 @@ async function connect() {
   async function selectAllPedidos() {
     const client = await connect();
     try {
-      const res = await client.query(`select * from pedidos`);
+      const res = await client.query(`select * from pedidos `);
       return res.rows;
     } finally {
       client.release(); // Libera a conexão após o uso
@@ -170,6 +170,29 @@ async function connect() {
     }
   }
 
+  //SELECIONANDO PEDIDOS
+  async function selectPedidosByData (dias, query) {
+    const {orderBy,direction} = query
+    const client = await connect();
+    try {
+      const res = await client.query(`SELECT * FROM pedidos WHERE data_pedido >= (CURRENT_DATE - INTERVAL '${dias} days') ORDER BY ${orderBy} ${direction};`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectPedidosByStatus (cidade) {
+    const client = await connect();
+    try {
+      const res = await client.query(`SELECT * FROM pedidos where cidade = '${cidade}'`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+
 
   module.exports = {
     selectAllProdutos,
@@ -185,5 +208,6 @@ async function connect() {
     selectAllPagamentos,
     selectAllPromocoes,
     selectAllSubcategorias,
-    selectAllEstoque
+    selectAllEstoque,
+    selectPedidosByData
 }

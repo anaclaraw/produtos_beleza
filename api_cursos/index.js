@@ -60,6 +60,11 @@ app.get('/pedidos/', async(req,res)=>{
     res.json(pedidos)
 })
 
+app.get('/pedidos/data/:dias', async(req,res)=>{
+    const pedidos = await db.selectPedidosByData(req.params.dias, req.query)
+    res.json(pedidos)
+})
+
 app.get('/pagamentos/', async(req,res)=>{
     const pagamentos = await db.selectAllPagamentos()
     res.json(pagamentos)
@@ -79,6 +84,8 @@ app.get('/estoque/', async(req,res)=>{
     const estoque = await db.selectAllEstoque()
     res.json(estoque)
 })
+
+
 
 app.get('/clientes/cidade/:cidade', async(req,res)=>{
     const marcas = await db.selectClienteByCidade(req.params.cidade)

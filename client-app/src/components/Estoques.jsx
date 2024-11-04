@@ -1,6 +1,7 @@
 // Estoques.js
 import React from 'react';
 import styled from 'styled-components';
+import LineChart from './Char';
 
 const Container = styled.div`
   background-color: #f4f6f8;
@@ -19,6 +20,9 @@ const Title = styled.h3`
 const List = styled.ul`
   list-style: none;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
 `;
 
 const ListItem = styled.li`
@@ -45,25 +49,31 @@ const EstoqueTitulo = styled.span`
   color: #333;
 `;
 
-const EstoqueDesconto = styled.span`
+const EstoqueQuantidade = styled.span`
   font-size: 0.9em;
   color: #666;
 `;
 
+
+
 const Estoques = ({ data }) => (
   <Container>
-    <Title>Promoções</Title>
+    <Title>Estoque</Title>
     <List>
       {data.map((Estoque) => (
         <ListItem key={Estoque.Estoque_id}>
           <EstoqueInfo>
-            <EstoqueDesconto>Produto: {Estoque.produto_id}</EstoqueDesconto>
-            <EstoqueDesconto>Quantidade: {Estoque.quantidade}</EstoqueDesconto>
+            <EstoqueTitulo>Produto {Estoque.produto_id}</EstoqueTitulo>
+            <EstoqueQuantidade>Quantidade: {Estoque.quantidade}</EstoqueQuantidade>
           </EstoqueInfo>
         </ListItem>
       ))}
     </List>
+   
   </Container>
-);
+)
 
 export default Estoques;
+
+
+

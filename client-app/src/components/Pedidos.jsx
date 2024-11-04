@@ -1,6 +1,90 @@
 // Pedidos.js
-import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+
+
+const Pedidos = ({ data }) => {
+
+  const [param, setParam] = useState('pedidos');
+  
+  const [dados, setDados] = useState(data);
+  const [orderBy, setOrderBy] = useState('pedido_id');
+  const [direction, setDirection] = useState('DESC');
+  const [shouldFetch, setShouldFetch] = useState(false);
+
+  useEffect(() => {
+    if (shouldFetch) {
+      fetchDados(param);
+      setShouldFetch(false); // Reseta o controle de fetch após a execução
+    }
+  }, [shouldFetch, param]);
+  
+  const handleOrderByChange = (event) => {
+    switch (event.target.value) {
+      case "todos":
+        setParam("pedidos");
+        break;
+      case "30_dias":
+        setDirection("DESC");
+        setParam("pedidos/data/30");
+        break;
+      case "7_dias":
+        setDirection("DESC");
+        setParam("pedidos/data/7");
+        break;
+      default:
+        return <p>Bem-vindos(as) à administração da T-Beauty!</p>;
+    }
+    setShouldFetch(true); // Sinaliza que o fetch deve ser feito após alterar param
+  };
+
+  const fetchDados = async (endpoint) => {
+    const url = `http://localhost:9005/${endpoint}`;
+    console.log('dados:',dados);
+    
+    try {
+      const response = await axios.get(url, { params: { orderBy, direction }});
+     
+      setDados(response.data);
+      
+    } catch (error) {
+      console.error('Erro ao buscar:', error);
+    } finally {
+      // setIsLoading(false);
+    }
+  };
+
+  return (
+    <Container>
+      <Title>Pedidos</Title>
+      <SelectPedidos onChange={handleOrderByChange}>
+        <option value="">Ordenar por:</option>
+        <option value="todos">Todos</option>
+        <option value="7_dias">Últimos 7 dias</option>
+        <option value="30_dias">Últimos 30 dias</option>
+      </SelectPedidos>
+      <List>
+        {dados.map((pedido) => (
+          <ListItem key={pedido.id}>
+            <PedidoInfo>
+              <PedidoID>Pedido {pedido.pedido_id}</PedidoID>
+              <TransportePedido>
+                {pedido.transporte}
+              </TransportePedido>
+              <TransportePedido >{pedido.data_pedido}</TransportePedido>
+              <PedidoStatus status={pedido.status_pedido}>{pedido.status_pedido}</PedidoStatus>
+
+            </PedidoInfo>
+          </ListItem>
+        ))}
+      </List>
+    </Container>
+  );
+}
+
+export default Pedidos;
+
 
 const Container = styled.div`
   background-color: #f4f6f8;
@@ -55,24 +139,9 @@ const TransportePedido = styled.span`
   color: #000000b0;
 `;
 
-const Pedidos = ({ data }) => (
-  <Container>
-    <Title>Pedidos</Title>
-    <List>
-      {data.map((pedido) => (
-        <ListItem key={pedido.id}>
-          <PedidoInfo>
-            <PedidoID>Pedido {pedido.pedido_id}</PedidoID>
-            <TransportePedido>
-            {pedido.transporte} 
-            </TransportePedido> 
-            <PedidoStatus status={pedido.status}>{pedido.status}</PedidoStatus>
-           
-          </PedidoInfo>
-        </ListItem>
-      ))}
-    </List>
-  </Container>
-);
-
-export default Pedidos;
+const SelectPedidos = styled.select`
+  font-size: 0.9em;
+  color: #000000b0;
+  padding: 5px;
+  border-radius: 20px;
+`;

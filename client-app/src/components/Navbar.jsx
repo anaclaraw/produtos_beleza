@@ -49,7 +49,7 @@ function Navbar() {
   return (
     <Nav>
       <Logo>
-       <A>Beauty Grow.</A>
+       <A>T-Beauty.</A>
       </Logo>
       <Links>
         <A>Home</A>
