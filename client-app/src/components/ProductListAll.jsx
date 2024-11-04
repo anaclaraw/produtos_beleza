@@ -134,7 +134,7 @@ const ProductCard = ({ product }) => (
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdwXtAOL0wCTsYOlr33hJX33swJ5ItWUmeRA&s" alt="" />
       <h3>{product.nome_produto}</h3>
       <p>{product.descricao} </p>
-      <p>{product.preco}</p>
+      <h4>{product.preco}</h4>
       <button>Comprar</button>
     </CardInfo>
   </Card>
@@ -256,6 +256,10 @@ const CardInfo = styled.div`
     padding: 10px;
     width: 60%;
     
+  }
+  h4{
+    margin: 0;
+    padding: 0;
   }
 `;
 

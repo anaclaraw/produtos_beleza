@@ -61,9 +61,9 @@ const Pagamentos = ({ data }) => (
           <PagamentoInfo>
             <PagamentoTitulo>Pedido ID:  <PagamentoName>{Pagamento.pedido_id}</PagamentoName></PagamentoTitulo>
            
-            <PagamentoTitulo>método de pagamento: <PagamentoName>{Pagamento.metodo_pagamento}</PagamentoName></PagamentoTitulo>
+            <PagamentoTitulo>Método de pagamento: <PagamentoName>{Pagamento.metodo_pagamento}</PagamentoName></PagamentoTitulo>
             
-            <PagamentoTitulo>valor pago: <PagamentoName>{Pagamento.valor}</PagamentoName></PagamentoTitulo>
+            <PagamentoTitulo>Valor pago: <PagamentoName>{Pagamento.valor}</PagamentoName></PagamentoTitulo>
             
             <PagamentoTitulo>Número de parcelas:  <PagamentoName>{Pagamento.numero_parcelas}</PagamentoName></PagamentoTitulo>
            
