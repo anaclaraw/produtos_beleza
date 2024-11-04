@@ -11,7 +11,7 @@ const ProductListAll = () => {
   const [orderBy, setOrderBy] = useState('preco');
   const [direction, setDirection] = useState('ASC');
   const [marca, setMarca] = useState([]);
-  const categories = ['Todos', 'Perfumes', 'Maquiagem', 'Cuidados com a pele','Higiene Pessoal','Cabelos'];
+  const categories = ['Todos', 'Perfumes', 'Maquiagem', 'Cuidados com a pele', 'Higiene Pessoal', 'Cabelos'];
 
 
   useEffect(() => {
@@ -28,10 +28,9 @@ const ProductListAll = () => {
     const url = `http://localhost:9005/produtos${endpoint}`;
     try {
       const response = await axios.get(url, { params: { orderBy, direction } });
-     
       setProducts(response.data);
       console.log(response.data);
-      
+
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
     } finally {
@@ -58,14 +57,14 @@ const ProductListAll = () => {
     if (selectedOrder) {
       setOrderBy(selectedOrder.orderBy);
       setDirection(selectedOrder.direction);
-    
-      
+
+
     }
-    
+
   };
 
   const handleSelectByMarca = (event) => {
-    const endpoint = event.target.value > 1 ?  `/marca/${event.target.value}` : '/' ; 
+    const endpoint = event.target.value > 1 ? `/marca/${event.target.value}` : '/';
     fetchProducts(endpoint);
   };
 

@@ -30,9 +30,8 @@ function Manager() {
     setData(response.data)
     setRoute(option)
     console.log('data:', data);
-
-
   }
+  
   const renderContent = () => {
     switch (route) {
       case 'Clientes':

@@ -45,7 +45,7 @@ const ClienteName = styled.span`
   color: #333;
 `;
 
-const ClienteEmail = styled.span`
+const ClienteDados = styled.span`
   font-size: 0.9em;
   color: #666;
 `;
@@ -58,11 +58,11 @@ const Clientes = ({ data }) => (
         <ListItem key={cliente.cliente_id}>
           <ClienteInfo>
             <ClienteName>{cliente.nome_cliente}</ClienteName>
-            <ClienteEmail> {cliente.email} - {cliente.telefone}</ClienteEmail>
-            <ClienteEmail> </ClienteEmail>
-            <ClienteEmail>CPF: {cliente.cpf} - Gênero: {cliente.genero}</ClienteEmail>
-            <ClienteEmail>Endereço: {cliente.logradouro} {cliente.numero}, {cliente.cidade} - {cliente.estado}</ClienteEmail>
-            <ClienteEmail>Data de nascimento: {cliente.data_nascimento}</ClienteEmail>
+            <ClienteDados> {cliente.email} - {cliente.telefone}</ClienteDados>
+            <ClienteDados> </ClienteDados>
+            <ClienteDados>CPF: {cliente.cpf} - Gênero: {cliente.genero}</ClienteDados>
+            <ClienteDados>Endereço: {cliente.logradouro} {cliente.numero}, {cliente.cidade} - {cliente.estado}</ClienteDados>
+            <ClienteDados>Data de nascimento: {cliente.data_nascimento}</ClienteDados>
           </ClienteInfo>
         </ListItem>
       ))}
