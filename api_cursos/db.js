@@ -7,7 +7,8 @@ async function connect() {
     const { Pool } = require("pg"); // Trazendo apenas o pool
   
     const pool = new Pool({
-      connectionString: process.env.CONNECTION_STRING
+      connectionString: process.env.CONNECTION_STRING,
+      ssl: { rejectUnauthorized: false }
     });
   
     global.connection = pool;
@@ -53,6 +54,67 @@ async function connect() {
     }
   }
 
+  async function selectAllClientes() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from clientes`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectAllPedidos() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from pedidos`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectAllPromocoes() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from promocoes`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectAllPagamentos() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from pagamentos`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+  async function selectAllSubcategorias() {
+    const client = await connect();
+    try {
+      const res = await client.query(`select * from subcategorias`);
+      return res.rows;
+    } finally {
+      client.release(); // Libera a conexão após o uso
+    }
+  }
+
+   async function selectAllEstoque() {
+     const client = await connect();
+     try {
+       const res = await client.query(`select * from estoques`);
+       return res.rows;
+     } finally {
+       client.release(); // Libera a conexão após o uso
+     }
+   }
+
+
   //Selecionando PRODUTOS com filtros
   async function selectProdutosById(id) {
     const client = await connect();
@@ -77,7 +139,7 @@ async function connect() {
   async function selectProdutosByNomeOrCategoria(palavra) {
     const client = await connect();
     try {
-      const res = await client.query("SELECT * FROM vw_produtos_and_marcas WHERE nome LIKE '%" + [palavra] + "%' OR descricao LIKE '%" + [palavra] + "%'");
+      const res = await client.query("SELECT * FROM vw_produtos_and_marcas WHERE nome_produto LIKE '%" + [palavra] + "%' OR descricao LIKE '%" + [palavra] + "%'");
       return res.rows;
     } catch (err) {
       console.error(err);
@@ -117,5 +179,11 @@ async function connect() {
     selectAllMarcas,
     selectProdutoByMarca,
     selectClienteByCidade,
-    selectByCategoria
+    selectByCategoria,
+    selectAllClientes,
+    selectAllPedidos,
+    selectAllPagamentos,
+    selectAllPromocoes,
+    selectAllSubcategorias,
+    selectAllEstoque
 }

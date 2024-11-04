@@ -132,7 +132,7 @@ const ProductCard = ({ product }) => (
   <Card>
     <CardInfo>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdwXtAOL0wCTsYOlr33hJX33swJ5ItWUmeRA&s" alt="" />
-      <h3>{product.nome}</h3>
+      <h3>{product.nome_produto}</h3>
       <p>{product.descricao} </p>
       <p>{product.preco}</p>
       <button>Comprar</button>
